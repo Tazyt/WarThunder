@@ -1,0 +1,641 @@
+/* Global Reset & Base Styles */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --font-primary: 'Orbitron', sans-serif;
+    --font-secondary: 'Exo 2', sans-serif;
+
+    --color-bg-dark: #0A0F14; /* Deep space blue/black */
+    --color-bg-medium: #101820; /* Slightly lighter */
+    --color-bg-light: #1A222B;
+    
+    --color-accent-primary: #00FFFF; /* Cyan */
+    --color-accent-secondary: #7DFDFE; /* Lighter Cyan */
+    --color-accent-glow: rgba(0, 255, 255, 0.7);
+
+    --color-text-primary: #E0E0E0;
+    --color-text-secondary: #A0A0A0;
+    --color-text-headings: var(--color-accent-secondary);
+
+    --border-color: rgba(0, 255, 255, 0.2);
+    --border-highlight: var(--color-accent-primary);
+
+    --transition-speed: 0.3s;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-secondary);
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated Background */
+#background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: 
+        linear-gradient(rgba(10, 15, 20, 0.95), rgba(10, 15, 20, 0.99)),
+        repeating-linear-gradient(0deg, transparent, transparent 19px, var(--border-color) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, var(--border-color) 20px);
+    background-size: cover, 20px 20px, 20px 20px; /* Grid size */
+    animation: pulseGrid 15s linear infinite;
+}
+
+@keyframes pulseGrid {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-accent-primary);
+    text-shadow: 0 0 10px var(--color-accent-glow);
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    font-family: var(--font-primary);
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color var(--transition-speed) ease, text-shadow var(--transition-speed) ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent-primary);
+    transition: width var(--transition-speed) ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-accent-secondary);
+    text-shadow: 0 0 8px var(--color-accent-glow);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+.header-accent {
+    position: absolute;
+    bottom: -1px; /* Align with border */
+    right: 0;
+    width: 30%;
+    height: 3px;
+    background: var(--color-accent-primary);
+    box-shadow: 0 0 10px var(--color-accent-glow);
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 1rem;
+    position: relative;
+    background: radial-gradient(ellipse at center, rgba(16, 24, 32, 0.3) 0%, transparent 70%);
+}
+
+.hero-content h1 {
+    font-family: var(--font-primary);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    color: var(--color-text-headings);
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.subtitle {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+/* Glitch Effect for H1 */
+.glitch {
+    position: relative;
+    text-shadow: 
+        0.05em 0 0 rgba(0,255,255,0.75),
+        -0.025em -0.05em 0 rgba(255,0,0,0.75),
+        0.025em 0.05em 0 rgba(0,0,255,0.75);
+    animation: glitch 500ms infinite;
+}
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-dark); /* Match body background */
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 var(--color-accent-primary);
+    animation: glitch-before 2s infinite linear alternate-reverse;
+}
+.glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 var(--color-accent-secondary); /* Or another color like red/blue for classic glitch */
+    animation: glitch-after 1.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch { 0%, 100% { text-shadow: 0.05em 0 0 rgba(0,255,255,0.75), -0.05em -0.025em 0 rgba(255,0,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); } 14% { text-shadow: 0.05em 0 0 rgba(0,255,255,0.75), -0.05em -0.025em 0 rgba(255,0,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); } 15% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,0.75), 0.025em 0.025em 0 rgba(255,0,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); } 49% { text-shadow: -0.05em -0.025em 0 rgba(0,255,255,0.75), 0.025em 0.025em 0 rgba(255,0,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); } 50% { text-shadow: 0.025em 0.05em 0 rgba(0,255,255,0.75), 0.05em 0 0 rgba(255,0,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); } 99% { text-shadow: 0.025em 0.05em 0 rgba(0,255,255,0.75), 0.05em 0 0 rgba(255,0,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); } 100% { text-shadow: -0.025em 0 0 rgba(0,255,255,0.75), -0.025em -0.025em 0 rgba(255,0,0,0.75), -0.025em -0.05em 0 rgba(0,0,255,0.75); } }
+@keyframes glitch-before { 0% { clip: rect(44px, 9999px, 56px, 0); } 10% { clip: rect(12px, 9999px, 60px, 0); } 20% { clip: rect(40px, 9999px, 44px, 0); } 30% { clip: rect(20px, 9999px, 70px, 0); } 40% { clip: rect(60px, 9999px, 80px, 0); } 50% { clip: rect(30px, 9999px, 50px, 0); } 60% { clip: rect(10px, 9999px, 35px, 0); } 70% { clip: rect(50px, 9999px, 65px, 0); } 80% { clip: rect(25px, 9999px, 55px, 0); } 90% { clip: rect(45px, 9999px, 75px, 0); } 100% { clip: rect(15px, 9999px, 60px, 0); } }
+@keyframes glitch-after { 0% { clip: rect(65px, 9999px, 75px, 0); } 10% { clip: rect(30px, 9999px, 45px, 0); } 20% { clip: rect(55px, 9999px, 70px, 0); } 30% { clip: rect(10px, 9999px, 25px, 0); } 40% { clip: rect(40px, 9999px, 50px, 0); } 50% { clip: rect(20px, 9999px, 35px, 0); } 60% { clip: rect(50px, 9999px, 60px, 0); } 70% { clip: rect(35px, 9999px, 40px, 0); } 80% { clip: rect(60px, 9999px, 80px, 0); } 90% { clip: rect(20px, 9999px, 30px, 0); } 100% { clip: rect(45px, 9999px, 55px, 0); } }
+
+/* Buttons */
+.btn {
+    font-family: var(--font-primary);
+    text-decoration: none;
+    padding: 0.8em 2em;
+    border: 2px solid var(--color-accent-primary);
+    color: var(--color-accent-primary);
+    background-color: transparent;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.btn::before { /* Shine effect */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--color-accent-glow), transparent);
+    transition: left var(--transition-speed) ease;
+    z-index: -1;
+}
+
+.btn:hover {
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg-dark);
+    box-shadow: 0 0 20px var(--color-accent-glow);
+    transform: translateY(-3px);
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* .btn-primary styles are inherited from .btn */
+.btn-secondary {
+    border-color: var(--color-text-secondary);
+    color: var(--color-text-secondary);
+}
+.btn-secondary:hover {
+    background-color: var(--color-text-secondary);
+    color: var(--color-bg-dark);
+    box-shadow: 0 0 15px rgba(160,160,160,0.5);
+}
+
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.scroll-indicator span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--color-accent-primary);
+    border-radius: 50%;
+    margin-bottom: 8px;
+    animation: scroll-pulse 1.5s infinite ease-in-out;
+}
+.scroll-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.scroll-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Content Sections */
+.content-section {
+    padding: 4rem 0; /* Vertical padding only, horizontal handled by .container */
+    margin-bottom: 3rem;
+    /* border-bottom: 1px solid var(--border-color); // Removed, will be applied within .container if needed */
+    opacity: 0; /* For scroll animation */
+    transform: translateY(50px); /* For scroll animation */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.content-section > .container { /* Ensure content within sections is constrained */
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 3rem; /* Spacing before the border */
+}
+.content-section:last-of-type > .container { /* Or :last-child if it's always the last direct child */
+    border-bottom: none;
+    padding-bottom: 0; /* No extra padding if no border */
+}
+
+.content-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: var(--color-text-headings);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    display: inline-block; /* For pseudo elements */
+    left: 50%;
+    transform: translateX(-50%);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.section-title::before, .section-title::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background-color: var(--color-accent-primary);
+    width: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.section-title::before { left: -70px; }
+.section-title::after { right: -70px; }
+
+.section-intro {
+    text-align: center;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    font-size: 1.1rem;
+}
+
+/* Card Grid for Intel Section */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    background-color: var(--color-bg-medium);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); /* Angled corners */
+}
+
+.info-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+    border-color: var(--border-highlight);
+}
+
+.info-card::before { /* Hover accent line */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 0;
+    background-color: var(--color-accent-primary);
+    transition: height var(--transition-speed) ease;
+}
+.info-card:hover::before {
+    height: 100%;
+}
+
+.card-icon {
+    /* font-family: var(--font-primary); // Not needed if only SVG */
+    /* font-size: 1.5rem; // SVG has fixed size, or use em in SVG for font-size control */
+    color: var(--color-accent-primary);
+    margin-bottom: 1rem;
+    line-height: 1; /* Ensure no extra space from line height */
+}
+
+.card-icon svg { /* Style for SVGs within the card-icon div */
+    width: 28px; /* Or use em/rem for responsive sizing e.g., 1.75rem */
+    height: 28px; /* Or use em/rem */
+    display: block; /* Or inline-block if needed */
+}
+
+.info-card h3 {
+    font-family: var(--font-primary);
+    color: var(--color-text-headings);
+    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-accent-secondary);
+    text-decoration: none;
+    font-weight: 600;
+}
+.card-link:hover {
+    text-decoration: underline;
+    color: var(--color-accent-primary);
+}
+
+/* Vehicle Showcase */
+.vehicle-showcase {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+.vehicle-card {
+    background-color: var(--color-bg-light);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    color: var(--color-text-secondary);
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    text-align: center;
+    min-width: 250px;
+    flex-grow: 1;
+    transition: all var(--transition-speed) ease;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+.vehicle-card:hover {
+    background-color: var(--color-bg-medium);
+    color: var(--color-accent-secondary);
+    border-color: var(--border-highlight);
+    transform: scale(1.05);
+}
+
+/* Tabs for Doctrine Section */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    gap: 0.5rem;
+}
+.tab-link {
+    font-family: var(--font-primary);
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+.tab-link.active, .tab-link:hover {
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg-dark);
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 10px var(--color-accent-glow);
+}
+.tab-content {
+    display: none;
+    padding: 1.5rem;
+    background-color: var(--color-bg-medium);
+    border: 1px solid var(--border-color);
+    animation: fadeIn 0.5s ease;
+}
+.tab-content.active {
+    display: block;
+}
+.tab-content h3 {
+    font-family: var(--font-primary);
+    color: var(--color-text-headings);
+    margin-bottom: 1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Community Links */
+.community-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Footer */
+.site-footer-bottom {
+    padding: 3rem 0 1rem 0; /* Vertical padding */
+    background-color: var(--color-bg-medium);
+    margin-top: 3rem;
+    clip-path: polygon(0 20px, 100% 0, 100% 100%, 0 100%); /* Angled top */
+    position: relative;
+    width: 100%; /* Ensure it spans full viewport width */
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    align-items: start;
+    /* padding: 2rem 0; // Padding handled by container now */
+    width: 90%; /* Match .container width */
+    max-width: 1400px; /* Match .container max-width */
+    margin: 0 auto; /* Center the grid content */
+}
+.footer-logo-area {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+}
+.copyright {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+.footer-links h4, .footer-social h4 {
+    font-family: var(--font-primary);
+    color: var(--color-text-headings);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.footer-links ul {
+    list-style: none;
+}
+.footer-links ul li a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    transition: color var(--transition-speed) ease;
+}
+.footer-links ul li a:hover {
+    color: var(--color-accent-secondary);
+}
+.footer-social a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    transition: color var(--transition-speed) ease;
+}
+.footer-social a:hover {
+    color: var(--color-accent-secondary);
+}
+.footer-accent-line {
+    height: 3px;
+    background: var(--color-accent-primary);
+    box-shadow: 0 0 10px var(--color-accent-glow);
+    margin-top: 2rem;
+    /* This line will also be full width if not constrained. 
+       If you want it constrained, it should be inside .footer-grid or another container.
+       For full width: */
+    width: 100%; 
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .section-title::before, .section-title::after { display: none; }
+    .hero-content h1 { font-size: clamp(2rem, 7vw, 4rem); }
+    .content-section {
+        padding: 3rem 0; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header { 
+        flex-direction: column; 
+        gap: 1rem; 
+        padding-left: 5%; /* Add padding to align with container */
+        padding-right: 5%;
+    }
+    .main-nav ul { flex-wrap: wrap; justify-content: center; gap: 0.5rem 1rem; }
+    .nav-link { font-size: 0.8rem; }
+    .card-grid { 
+        grid-template-columns: 1fr; /* Stack cards */
+        gap: 1.5rem;
+    } 
+    .info-card {
+        padding: 1.5rem;
+    }
+    .tabs { flex-direction: column; gap: 0.25rem; }
+    .tab-link { width: 100%; font-size: 0.85rem; padding: 0.6rem 1rem; }
+    .footer-grid { 
+        grid-template-columns: 1fr; 
+        text-align: center; 
+        width: 90%; /* Ensure it uses the container width logic */
+    }
+    .footer-logo-area, .footer-links, .footer-social { 
+        margin-bottom: 1.5rem; 
+        width: 100%; /* Ensure they take full width within the centered grid column */
+    }
+    .site-footer-bottom {
+        clip-path: polygon(0 10px, 100% 0, 100% 100%, 0 100%); /* Reduce angle for smaller screens */
+    }
+    .content-section {
+        padding: 2.5rem 0;
+    }
+    .content-section > .container {
+        padding-bottom: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 15px; /* Slightly adjust base font for very small screens */
+    }
+    .container, .footer-grid { 
+        width: 95%; 
+    }
+    .hero-content h1 { font-size: clamp(1.8rem, 10vw, 2.5rem); } /* Adjusted max for smaller screens */
+    .subtitle { font-size: clamp(0.8rem, 4vw, 1.1rem); } /* Adjusted max */
+    .btn { padding: 0.7em 1.2em; font-size: 0.8rem; }
+    .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
+    .info-card h3 { font-size: 1.2rem; }
+    .vehicle-card { min-width: unset; width: 100%; } /* Stack vehicle cards */
+    .site-footer-bottom {
+        padding-top: 2rem;
+    }
+    .footer-grid {
+        gap: 1.5rem;
+    }
+    .content-section {
+        padding: 2rem 0;
+    }
+    .content-section > .container {
+        padding-bottom: 2rem;
+    }
+}
