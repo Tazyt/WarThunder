@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - War Thunder: Future Frontlines</title>
+    <link rel="icon" type="image/png" href="assets/icon/wt.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="background-animation"></div>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <img src="assets/icon/wt.png" alt="WT_FF Logo" style="height:2.2rem;vertical-align:middle;">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#hero" class="nav-link page-link">Engage</a></li>
+                    <li><a href="index.html#intel" class="nav-link page-link">Events</a></li>
+                    <li><a href="terms.html" class="nav-link page-link">Terms</a></li>
+                    <li><a href="privacy.html" class="nav-link page-link">Policy</a></li>
+                    <!-- <li><a href="index.html#arsenal" class="nav-link page-link">Arsenal</a></li> -->
+                    <!-- <li><a href="index.html#doctrine" class="nav-link page-link">Doctrine</a></li> -->
+                    <li><a href="index.html#comms" class="nav-link page-link">Discord</a></li>
+                </ul>
+            </nav>
+            <div class="header-accent"></div>
+        </header>
+
+        <main>
+            <section class="content-section" style="min-height:60vh;">
+                <h2 class="section-title" data-text="Privacy Policy">Privacy Policy</h2>
+                <div class="section-intro" style="margin-bottom:2.5rem;">
+                    Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information.
+                </div>
+                <div style="max-width:800px;margin:0 auto;color:var(--color-text-secondary);font-size:1.05rem;">
+                    <h3 style="color:var(--color-text-headings);margin-top:2rem;">1. Information Collection</h3>
+                    <p>We do not collect personal information unless you voluntarily provide it (e.g., via contact forms or community links).</p>
+
+                    <h3 style="color:var(--color-text-headings);margin-top:2rem;">2. Cookies & Analytics</h3>
+                    <p>This site does not use cookies or analytics services at this time.</p>
+
+                    <h3 style="color:var(--color-text-headings);margin-top:2rem;">3. Third-Party Links</h3>
+                    <p>Links to external sites (such as Discord) are not covered by this policy. Please review their privacy policies separately.</p>
+
+                    <h3 style="color:var(--color-text-headings);margin-top:2rem;">4. Data Security</h3>
+                    <p>We take reasonable steps to protect any information you provide, but cannot guarantee absolute security.</p>
+
+                    <h3 style="color:var(--color-text-headings);margin-top:2rem;">5. Changes</h3>
+                    <p>This policy may be updated. Changes will be posted on this page.</p>
+
+                    <h3 style="color:var(--color-text-headings);margin-top:2rem;">6. Contact</h3>
+                    <p>For privacy-related questions, please use the support link in the footer.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer-bottom">
+            <div class="footer-grid">
+                <div class="footer-logo-area">
+                    <img src="assets/icon/wt.png" alt="WT_FF Logo" style="height:1.8rem;vertical-align:middle;">
+                    <p class="copyright">&copy; 2024 WarThunder Future Frontlines. All Rights Reserved. Gaijin and War Thunder are trademarks or registered trademarks of Gaijin Network LTD.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="privacy.html" class="page-link">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="page-link">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <span>Coming soon</span>
+                </div>
+            </div>
+            <div class="footer-accent-line"></div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+    // Smooth page transition
+    document.querySelectorAll('a.page-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.body.style.transition = 'opacity 0.5s';
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 500);
+        });
+    });
+    // Fade in on page load
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s';
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => { document.body.style.opacity = '1'; }, 10);
+    });
+    </script>
+</body>
+</html>
