@@ -639,3 +639,95 @@ body {
         padding-bottom: 2rem;
     }
 }
+
+/* Application Form */
+.application-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--color-bg-medium);
+    padding: 2.5rem;
+    border: 1px solid var(--border-color);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-primary);
+    color: var(--color-text-headings);
+    font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-primary);
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 10px var(--color-accent-glow);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-submit-btn {
+    text-align: right;
+}
+
+#form-response {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    display: none; /* Hidden by default */
+    font-weight: 600;
+}
+
+/* Requirements Section */
+.requirements-list {
+    list-style: none;
+    padding-left: 0;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+    background-color: rgba(0, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.requirements-list li {
+    padding-left: 2rem;
+    position: relative;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--color-text-primary);
+}
+
+.requirements-list li::before {
+    content: '✓'; /* Checkmark */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-accent-primary);
+    font-family: var(--font-primary);
+    font-weight: 900;
+}
+
+.requirements-list li:last-child {
+    margin-bottom: 0;
+}

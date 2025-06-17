@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application - War Thunder: Future Frontlines</title>
+    <link rel="icon" type="image/png" href="assets/icon/wt.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="background-animation"></div>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <img src="assets/icon/wt.png" alt="WT_FF Logo" style="height:2.2rem;vertical-align:middle;">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#hero" class="nav-link page-link">HOME</a></li>
+                    <li><a href="index.html#intel" class="nav-link page-link">Events</a></li>
+                    <li><a href="index.html#comms" class="nav-link page-link">Discord</a></li>
+                    <li><a href="application.html" class="nav-link page-link active">Application</a></li>
+                </ul>
+            </nav>
+            <div class="header-accent"></div>
+        </header>
+
+        <main>
+            <section id="requirements" class="content-section">
+                <h2 class="section-title" data-text="Application Requirements">Application Requirements</h2>
+                <ul class="requirements-list">
+                    <li>Must be 16 years of age or older.</li>
+                    <li>Must have a working microphone and be willing to use it.</li>
+                    <li>Must own at least one top-tier vehicle (Air or Ground).</li>
+                    <li>Must be respectful, mature, and a team player.</li>
+                    <li>Must remain active; inactivity may result in removal from the squadron.</li>
+                    <li>Giving the squadron a bad name will result in an immediate ban or kick.</li>
+                </ul>
+            </section>
+
+            <section id="application-form-section" class="content-section">
+                <h2 class="section-title" data-text="Squadron Application">Squadron Application</h2>
+                <p class="section-intro">If you meet the requirements, fill out the form below to apply.</p>
+                
+                <form id="application-form" class="application-form">
+                    <div class="form-group">
+                        <label for="ingame_name">In-Game Name</label>
+                        <input type="text" id="ingame_name" name="ingame_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" required min="16">
+                    </div>
+                    <div class="form-group">
+                        <label for="discord_name">Discord Username (e.g., user#1234)</label>
+                        <input type="text" id="discord_name" name="discord_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">Why do you want to join?</label>
+                        <textarea id="reason" name="reason" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contribution">What can you bring to the team?</label>
+                        <textarea id="contribution" name="contribution" required></textarea>
+                    </div>
+                    <div class="form-submit-btn">
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                    <div id="form-response"></div>
+                </form>
+            </section>
+        </main>
+
+        <footer class="site-footer-bottom">
+            <div class="footer-grid">
+                <div class="footer-logo-area">
+                    <img src="assets/icon/wt.png" alt="WT_FF Logo" style="height:1.8rem;vertical-align:middle;">
+                    <p class="copyright">&copy; 2024 WarThunder Future Frontlines. All Rights Reserved. Gaijin and War Thunder are trademarks or registered trademarks of Gaijin Network LTD.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="application.html" class="page-link">Application</a></li>
+                        <li><a href="terms.html" class="page-link">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="page-link">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <span>Coming soon</span>
+                </div>
+            </div>
+            <div class="footer-accent-line"></div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Smooth page transition
+        document.querySelectorAll('a.page-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.body.style.transition = 'opacity 0.5s';
+                document.body.style.opacity = '0';
+                setTimeout(() => { window.location.href = this.href; }, 500);
+            });
+        });
+        // Fade in on page load
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s';
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => { document.body.style.opacity = '1'; }, 10);
+        });
+
+        // --- Form Submission to Discord Webhook ---
+        const form = document.getElementById('application-form');
+        const responseMessage = document.getElementById('form-response');
+        const webhookUrl = 'https://ptb.discord.com/api/webhooks/1384603073179156621/ntF_lA2miE9zYnyh44VjQF6MTF6YjcInfCWDb5_HiOkibbLkVUKcVMket1ZXVHNTnb3Z';
+
+        // --- Submission Cooldown Configuration ---
+        const useSubmissionCooldown = true; // Set to true to enable 24-hour cooldown
+        const cooldownKey = 'lastApplicationTime';
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Cooldown check
+            if (useSubmissionCooldown) {
+                const lastSubmissionTime = localStorage.getItem(cooldownKey);
+                if (lastSubmissionTime) {
+                    const twentyFourHours = 24 * 60 * 60 * 1000;
+                    const timeSinceLastSubmission = new Date().getTime() - parseInt(lastSubmissionTime, 10);
+                    if (timeSinceLastSubmission < twentyFourHours) {
+                        const hoursRemaining = Math.ceil((twentyFourHours - timeSinceLastSubmission) / (60 * 60 * 1000));
+                        responseMessage.textContent = `You may only apply once every 24 hours. Please try again in about ${hoursRemaining} hour(s).`;
+                        responseMessage.style.color = '#ffcc00'; // Warning yellow
+                        responseMessage.style.display = 'block';
+                        return; // Stop the submission
+                    }
+                }
+            }
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+
+            const formData = new FormData(form);
+            const data = {
+                username: "Application Bot",
+                avatar_url: "https://i.imgur.com/4M34hi2.png",
+                embeds: [{
+                    title: "New Squadron Application",
+                    color: 65535, // Cyan
+                    fields: [
+                        { name: "In-Game Name", value: formData.get('ingame_name') || 'N/A', inline: true },
+                        { name: "Age", value: formData.get('age') || 'N/A', inline: true },
+                        { name: "Discord Username", value: formData.get('discord_name') || 'N/A', inline: true },
+                        { name: "Why do you want to join?", value: formData.get('reason') || 'N/A' },
+                        { name: "What can you bring to the team?", value: formData.get('contribution') || 'N/A' }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    responseMessage.textContent = 'Application submitted successfully!';
+                    responseMessage.style.color = 'var(--color-accent-primary)';
+                    form.reset();
+                    // Set cooldown timestamp on successful submission
+                    if (useSubmissionCooldown) {
+                        localStorage.setItem(cooldownKey, new Date().getTime().toString());
+                    }
+                } else {
+                    responseMessage.textContent = 'Error submitting application. Please try again later.';
+                    responseMessage.style.color = '#ff4d4d';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                responseMessage.textContent = 'An unexpected error occurred. Please check the console.';
+                responseMessage.style.color = '#ff4d4d';
+            })
+            .finally(() => {
+                responseMessage.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Application';
+            });
+        });
+    </script>
+</body>
+</html>

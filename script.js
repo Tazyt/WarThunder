@@ -119,14 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Optional: Parallax effect for background or specific elements
-    // window.addEventListener('scroll', () => {
-    //     const scrolled = window.pageYOffset;
-    //     const background = document.getElementById('background-animation');
-    //     if (background) {
-    //         // Adjust the '0.5' for more or less parallax effect
-    //         background.style.transform = `translateY(${scrolled * 0.1}px)`;
-    //     }
-    // });
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const background = document.getElementById('background-animation');
+        if (background) {
+            // Adjust the '0.1' for more or less parallax effect
+            background.style.transform = `translateY(${scrolled * 0.1}px)`;
+        }
+    });
 
     // Initial call to set active nav link if page loads on a section
     window.dispatchEvent(new Event('scroll'));
