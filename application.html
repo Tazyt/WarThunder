@@ -117,7 +117,7 @@
         // --- Form Submission to Discord Webhook ---
         const form = document.getElementById('application-form');
         const responseMessage = document.getElementById('form-response');
-        const webhookUrl = 'https://ptb.discord.com/api/webhooks/1384603073179156621/ntF_lA2miE9zYnyh44VjQF6MTF6YjcInfCWDb5_HiOkibbLkVUKcVMket1ZXVHNTnb3Z';
+        const obfuscatedUrl = 'aHR0cHM6Ly9wdGIuZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzEzODQ2MDMwNzMxNzkxNTY2MjEvbnRGX2xBMm1pRTl6WW55aDQ0VmpRRjZNVEY2WWpjSW5mQ1dEYjVfSGlPa2liYkxrdlVLY1ZNa2V0MVpYVkhOVG5iM1o=';
 
         // --- Submission Cooldown Configuration ---
         const useSubmissionCooldown = true; // Set to true to enable 24-hour cooldown
@@ -140,6 +140,13 @@
                         return; // Stop the submission
                     }
                 }
+            }
+
+            const webhookUrl = atob(obfuscatedUrl); // Decode the URL right before use
+
+            if (!webhookUrl || webhookUrl.includes('YOUR_DISCORD_WEBHOOK_URL_HERE')) {
+                alert('Webhook URL is not configured. Please contact the site administrator.');
+                return;
             }
 
             const submitButton = form.querySelector('button[type="submit"]');
