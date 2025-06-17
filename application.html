@@ -117,7 +117,18 @@
         // --- Form Submission to Discord Webhook ---
         const form = document.getElementById('application-form');
         const responseMessage = document.getElementById('form-response');
-        const obfuscatedUrl = 'aHR0cHM6Ly9wdGIuZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzEzODQ2MDMwNzMxNzkxNTY2MjEvbnRGX2xBMm1pRTl6WW55aDQ0VmpRRjZNVEY2WWpjSW5mQ1dEYjVfSGlPa2liYkxrdlVLY1ZNa2V0MVpYVkhOVG5iM1o=';
+        
+        // --- Webhook Obfuscation ---
+        // This is more secure than Base64, but still not true encryption.
+        // The best practice is a server-side proxy to completely hide the URL.
+        const webhookData = {
+            key: 5,
+            payload: '113,119,119,121,124,58,47,47,121,119,99,46,103,108,124,98,113,103,46,98,114,112,47,96,121,108,47,128,104,99,107,114,114,110,124,47,54,56,53,53,51,55,58,52,52,56,52,56,54,54,52,54,47,119,119,75,101,111,66,57,112,108,74,56,125,89,113,125,107,56,56,87,105,81,75,59,77,85,75,59,89,105,98,74,113,102,67,88,68,99,58,101,72,108,79,100,108,99,99,77,100,87,85,75,98,87,77,100,104,119,54,90,88,87,72,79,85,119,99,58,90'
+        };
+        const getWebhookUrl = () => {
+            return webhookData.payload.split(',').map(code => String.fromCharCode(parseInt(code) - webhookData.key)).join('');
+        };
+        // --- End Webhook Obfuscation ---
 
         // --- Submission Cooldown Configuration ---
         const useSubmissionCooldown = true; // Set to true to enable 24-hour cooldown
@@ -137,17 +148,12 @@
                         responseMessage.textContent = `You may only apply once every 24 hours. Please try again in about ${hoursRemaining} hour(s).`;
                         responseMessage.style.color = '#ffcc00'; // Warning yellow
                         responseMessage.style.display = 'block';
-                        return; // Stop the submission
+                        return;
                     }
                 }
             }
 
-            const webhookUrl = atob(obfuscatedUrl); // Decode the URL right before use
-
-            if (!webhookUrl || webhookUrl.includes('YOUR_DISCORD_WEBHOOK_URL_HERE')) {
-                alert('Webhook URL is not configured. Please contact the site administrator.');
-                return;
-            }
+            const webhookUrl = getWebhookUrl(); // Decode the URL right before use
 
             const submitButton = form.querySelector('button[type="submit"]');
             submitButton.disabled = true;
@@ -181,7 +187,6 @@
                     responseMessage.textContent = 'Application submitted successfully!';
                     responseMessage.style.color = 'var(--color-accent-primary)';
                     form.reset();
-                    // Set cooldown timestamp on successful submission
                     if (useSubmissionCooldown) {
                         localStorage.setItem(cooldownKey, new Date().getTime().toString());
                     }
